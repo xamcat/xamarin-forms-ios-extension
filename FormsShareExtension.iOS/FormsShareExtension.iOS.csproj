@@ -132,5 +132,10 @@
       <Project>{476B6744-B597-46F8-BEE2-7283390CED81}</Project>
       <Name>FormsShareExtension</Name>
     </ProjectReference>
+    <ProjectReference Include="..\FormsShareExtension.iOS.MyAction\FormsShareExtension.iOS.MyAction.csproj">
+      <IsAppExtension>true</IsAppExtension>
+      <Project>{F3D01160-0FD8-4EFE-A825-6F0A70C3C6AC}</Project>
+      <Name>FormsShareExtension.iOS.MyAction</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

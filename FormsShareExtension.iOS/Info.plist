@@ -21,7 +21,7 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>8.0</string>
+	<string>13.4</string>
 	<key>CFBundleDisplayName</key>
 	<string>FormsShareExtension</string>
 	<key>CFBundleIdentifier</key>
@@ -34,5 +34,7 @@
 	<string>FormsShareExtension</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
 </dict>
 </plist>
