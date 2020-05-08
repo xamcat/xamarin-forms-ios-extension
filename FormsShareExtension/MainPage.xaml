@@ -5,12 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    BackgroundColor="Orange"
     mc:Ignorable="d">
     <StackLayout>
         <!--  Place new controls here  -->
         <Label
+            x:Name="lblText"
+            Margin="20"
             HorizontalOptions="Center"
-            Text="Welcome to Xamarin.Forms!!"
+            HorizontalTextAlignment="Center"
+            Text="Welcome to Xamarin.Forms!!!"
             VerticalOptions="CenterAndExpand" />
     </StackLayout>
 </ContentPage>

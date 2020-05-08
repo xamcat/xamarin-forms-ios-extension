@@ -13,6 +13,12 @@ namespace FormsShareExtension
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
+        public string TitleText
+        {
+            get { return lblText.Text; }
+            set { lblText.Text = value; }
+        }
+
         public MainPage()
         {
             InitializeComponent();
