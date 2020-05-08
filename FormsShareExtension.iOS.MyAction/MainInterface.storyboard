@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="44" width="320" height="44"/>
                                 <items>
                                     <navigationItem id="3HJ-uW-3hn">
-                                        <barButtonItem key="leftBarButtonItem" title="Done" style="done" id="WYi-yp-eM6">
+                                        <barButtonItem key="leftBarButtonItem" title="Done!" style="done" id="WYi-yp-eM6">
                                             <connections>
                                                 <action selector="DoneClicked:" destination="ObA-dk-sSI" id="Qdu-qn-U6V"/>
                                             </connections>
@@ -40,7 +40,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="NOA-Dm-cuz" secondAttribute="trailing" id="A05-Pj-hrr"/>
                             <constraint firstItem="NOA-Dm-cuz" firstAttribute="leading" secondItem="zMn-AG-sqS" secondAttribute="leading" id="HxO-8t-aoh"/>
