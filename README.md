@@ -1,28 +1,27 @@
-# xamarin-forms-ios-extension
+# Reuse your Xamarin.Forms pages in an iOS extension
 
-## automatic provisioning issue
+## Intro
 
-Steps:
+1. The current approach to implement extensions - native.
+1. Either shared via the common iOS project, or linked files or copy-pasted.
+1. Inability to share your XF code with extensions.
 
-1. Create new empty Xamarin.Forms app with iOS app enabled
-1. Open Entitlements.plist and check `Enable App Groups`, add any random group name like `group.com.my.test`
-1. Open  Info.plist and switch the scheme to be `Automatic Provisioning`. Select your dev team and wait until compeleted
+## Solution
 
-[Bug #1] Result: a new app id is not generated because the wildcard profile is used, the auto-provision feature ignores the app groups entitlement as required for non-wildcard app id. In this case automatic provisioning choses the wildcard app id and profile.
+XF native support via CreateViewController()
 
-1. Open Entitlements.plist and check `Enable AutoFill Credential provider`, this entitlement is recognized and new AppId is created. In this case automatic provisioning choses the app specific app id and a related profile.
+## Walkthrough
 
-[Bug #2] Result: a new app id is generated but it doesn't include the App Groups capability
+1. Create a project.
+1. Update the main page to include some interactions.
+1. Add extension.
+1. Init XF - talk about limitations.
+1. Create page, convert to the controller and render.
+1. Reference back to the main article, warn about limitations and release settings and need to test on a device.
 
-In both cases, the VS4Mac is unable to deploy the app to device with the following error:
+[Screenshots or a running app, GIF better but static image for the docs is required]
 
-```bash
-ApplicationVerificationFailed: Failed to verify code signature of /private/var/installd/Library/Caches/com.apple.mobile.installd.staging/temp.DJgPAL/extracted/FormsShareExtension.iOS.app : 0xe8008016 (The executable was signed with invalid entitlements.)
-error MT1006: Could not install the application '/Users/<user>/Sources/xamarin-forms-ios-extension/FormsShareExtension.iOS/bin/iPhone/Debug/device-builds/iphone10.3-13.4.1/FormsShareExtension.iOS.app' on the device '<device-name>': Your code signing/provisioning profiles are not correctly configured. Probably you have an entitlement not supported by your current provisioning profile, or your device is not part of the current provisioning profile. Please check the iOS Device Log for details (error: 0xe8008016).
+## Useful links
 
-Application could not be uploaded to the device.
-```
-
-![auto](ReadmeItems/vs-automatic-prov-1.png)
-
-![auto](ReadmeItems/vs-automatic-prov-2.png)
+- [iOS extensions in Xamarin.iOS](https://docs.microsoft.com/xamarin/ios/platform/extensions)
+- [Optimize Efficiency and Performance of an iOS App Extension](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html#//apple_ref/doc/uid/TP40014214-CH5-SW7)
