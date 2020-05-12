@@ -6,11 +6,11 @@ Steps:
 
 1. Create new empty Xamarin.Forms app with iOS app enabled
 1. Open Entitlements.plist and check `Enable App Groups`, add any random group name like `group.com.my.test`
-1. Open  Info.plist and switch the sceme to be `Automatic Provisioning`. Select your dev team and wait until compeleted
+1. Open  Info.plist and switch the scheme to be `Automatic Provisioning`. Select your dev team and wait until compeleted
 
 [Bug #1] Result: a new app id is not generated because the wildcard profile is used, the auto-provision feature ignores the app groups entitlement as required for non-wildcard app id. In this case automatic provisioning choses the wildcard app id and profile.
 
-1. Open Entitlements.plist and check `Enable AutoFill Credential provider`, this entitlement is recognized and new AppId is created. In this case automatic provisioning choses the app speicific app id and a related profile.
+1. Open Entitlements.plist and check `Enable AutoFill Credential provider`, this entitlement is recognized and new AppId is created. In this case automatic provisioning choses the app specific app id and a related profile.
 
 [Bug #2] Result: a new app id is generated but it doesn't include the App Groups capability
 
