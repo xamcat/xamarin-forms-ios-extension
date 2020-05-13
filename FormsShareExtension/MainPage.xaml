@@ -4,17 +4,19 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:local="clr-namespace:FormsShareExtension"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:DataType="local:MainPageViewModel"
     BackgroundColor="Orange"
     mc:Ignorable="d">
-    <StackLayout>
-        <!--  Place new controls here  -->
+    <ContentPage.BindingContext>
+        <local:MainPageViewModel Message="Hello from Xamarin.Forms!" />
+    </ContentPage.BindingContext>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <Label
-            x:Name="lblText"
             Margin="20"
-            HorizontalOptions="Center"
-            HorizontalTextAlignment="Center"
-            Text="Welcome to Xamarin.Forms!!!"
+            Text="{Binding Message}"
             VerticalOptions="CenterAndExpand" />
+        <Button Command="{Binding DoCommand}" Text="Do the job!" />
     </StackLayout>
 </ContentPage>

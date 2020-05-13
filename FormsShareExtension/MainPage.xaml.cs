@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -13,12 +12,6 @@ namespace FormsShareExtension
     [DesignTimeVisible(false)]
     public partial class MainPage : ContentPage
     {
-        public string TitleText
-        {
-            get { return lblText.Text; }
-            set { lblText.Text = value; }
-        }
-
         public MainPage()
         {
             InitializeComponent();

@@ -16,8 +16,6 @@
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
 	<key>MinimumOSVersion</key>
 	<string>13.4</string>
 	<key>NSExtension</key>
@@ -51,5 +49,7 @@
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.ui-services</string>
 	</dict>
+	<key>CFBundleVersion</key>
+	<string>2</string>
 </dict>
 </plist>
