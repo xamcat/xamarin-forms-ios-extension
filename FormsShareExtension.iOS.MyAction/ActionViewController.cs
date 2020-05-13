@@ -21,8 +21,8 @@ namespace MyAction
             // Create an instance of XF page with associated View Model
             var xfPage = new MainPage();
             var viewModel = (MainPageViewModel)xfPage.BindingContext;
-            viewModel.Message = "Welcome to XF Page created from an iOS extension";
-            // Override the behavior to complete the execution of the extension when a user press the button
+            viewModel.Message = "Welcome to XF Page created from an iOS Extension";
+            // Override the behavior to complete the execution of the Extension when a user press the button
             viewModel.DoCommand = new Command(() => DoneClicked(this));
             // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
             var newController = xfPage.CreateViewController();

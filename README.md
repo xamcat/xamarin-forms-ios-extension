@@ -2,39 +2,38 @@
 
 ## Background
 
-iOS extensions allow to customize existing system behavior by adding extra functionality to [predefined by iOS Extension Points](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/index.html#//apple_ref/doc/uid/TP40014214-CH20-SW2) such as custom context actions, password autofill, incoming calls filtering, notification content modifiers, and other. Xamarin.iOS supports extensions and [this guide](https://docs.microsoft.com/xamarin/ios/platform/extensions) will walk you through creating an iOS extension using Xamarin tools.
+iOS extensions allow to customize existing system behavior by adding extra functionality to [predefined by iOS and macOS Extension Points](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/index.html#//apple_ref/doc/uid/TP40014214-CH20-SW2), such as custom context actions, password autofill, incoming calls filters, notification content modifiers, and other. Xamarin.iOS supports extensions and [this guide](https://docs.microsoft.com/xamarin/ios/platform/extensions) will walk you through creating an iOS extension using Xamarin tools.
 
-Extensions are distributed as part of a Container app and activated from a specific Extension Point in a Host app. The Container app is usually a regular iOS application, which provides an user with information about the Extension, how to install and activate it. There are three main ways to share code between an Extension and a Container app:
+Extensions are distributed as part of a Container app and activated from a specific Extension Point in a Host app. The Container app is usually a simple iOS application, which provides an user with information about the Extension, how to activate and use it. There are three main ways to share code between an Extension and a Container app:
 
 1. Common iOS project.
 
-    With a shared iOS project you can put all the shared code between the Container and the Extension and reference it from both projects. Usually the shared core contains UIViewControllers and the shared project has to be a Xamarin.iOS library.
+    You can put all the shared code between the Container and the Extension into a shared iOS library and reference the library from both projects. Usually, the shared library contains native UIViewControllers and it has to be a Xamarin.iOS library.
 
 1. File links.
 
-    In some cases the Container app provides all the functionality while the Extension need to render single UIViewController. With just few files to share, it's common to add a file link to the Extension app to the file located in the Container app.
+    In some cases the Container app provides most of the functionality while the Extension needs to render a single `UIViewController`. With few files to share, it's common to add a file link to the Extension app from the file located in the Container app.
 
-1. Copy-paste.
+1. Common Xamarin.Forms project.
 
-    It's not very common to see developers copy-pasting code from one project to another but in some cases, if your pages are already shared with another platform, such as Android, using Xamarin.Forms platform, the copy-paste seems to be the only option. It happens because iOS Extension expects native UIViewController to display.
-
-This post explains how you can reuse your Xamarin.Forms pages in an Xamarin.iOS Extension without copy-pase.
+    If your pages are already shared with another platform, such as Android, using Xamarin.Forms framework, the common approach is to reimplement required pages natively in the Extension project, because the iOS Extension works with native UIViewControllers and not Xamarin.Forms pages. You have to perform a few extra steps to use Xamarin.Forms in the iOS Extension and this post explains how you can do that.
 
 ## Xamarin.Forms in an iOS Extension project
 
-The ability to use Xamarin.Forms in a native project is provided via [Native Forms](https://docs.microsoft.com/xamarin/xamarin-forms/platform/native-forms). It allows `ContentPage`-derived pages to be added directly to native Xamarin.iOS. The `CreateViewController` extension method converts an instance of a Xamarin.Forms page to a native UIViewController, which could be used or extended as a regular controller. And because an iOS Extension is a special kind of a native iOS project, you can you the same technics here.
+The ability to use Xamarin.Forms in a native project is provided via [Native Forms](https://docs.microsoft.com/xamarin/xamarin-forms/platform/native-forms). It allows `ContentPage`-derived pages to be added directly to native Xamarin.iOS projects. The `CreateViewController` extension method converts an instance of a Xamarin.Forms page to a native `UIViewController`, which could be used or modified as a regular controller. And because an iOS Extension is a special kind of a native iOS project, you can use the same approach here.
 
-There are many [known limitations](https://docs.microsoft.com/xamarin/ios/platform/extensions#limitations) for Extensions. Although you can use Xamarin.Forms in an iOS Extension, you should do it very carefully, monitoring memory usage and startup time. Otherwise the Extension can be terminated by iOS without any way to handle this case gracefully.
+> [!IMPORTANT]
+> There are many [known limitations](https://docs.microsoft.com/xamarin/ios/platform/extensions#limitations) for iOS Extensions. Although you can use Xamarin.Forms in an iOS Extension, you should do it very carefully, monitoring memory usage and startup time. Otherwise the Extension could be terminated by iOS without any way to handle this gracefully.
 
 ## Walkthrough
 
-In this walkthrough we are going to create a Xamarin.Forms application, a Xamarin.iOS Extension and reuse shared code within the Extension project:
+In this walkthrough we are going to create a Xamarin.Forms application, a Xamarin.iOS Extension and reuse shared code in the Extension project:
 
-1. Open Visual Studio and create a new Xamarin.Forms project using the `Blank Forms App` template, name it `FormsShareExtension`:
+1. Open Visual Studio and create a new Xamarin.Forms project using the **Blank Forms App** template, name it **FormsShareExtension**:
 
     ![Create Project](/ReadmeItems/1.walkthrough-createproject.png)
 
-1. Open `FormsShareExtension/MainPage.xaml`, replace the content with the following layout:
+1. Open **FormsShareExtension/MainPage.xaml**, replace the content with the following layout:
 
     ```xaml
     <?xml version="1.0" encoding="utf-8" ?>
@@ -61,7 +60,7 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
     </ContentPage>
     ```
 
-1. Right click on the `FormsShareExtension` project, add `Add` > `New Class` > `Empty Class`, name it `MainPageViewModel` and press `Create`. Replace the content of the class with the following code:
+1. Right click on the **FormsShareExtension** project, select **Add > New Class > Empty Class**, name it **MainPageViewModel.cs** and press **Create**. Replace the content of the class with the following code:
 
     ```csharp
     using System;
@@ -118,17 +117,17 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 
     The code is shared across all platforms and will be used by an iOS Extension as well.
 
-1. Right click on the solution, select `Add` > `New Project` > `iOS` > `Extension` > `Action Extension`, name it `MyAction` and press **Create**:
+1. Right click on the solution, select **Add > New Project > iOS > Extension > Action Extension**, name it **MyAction** and press **Create**:
 
     ![Create Extension](/ReadmeItems/2.walkthrough-createextension.png)
 
 1. In order to use Xamarin.Forms in the iOS Extension and the shared code, we need to add required references:
 
-    - Right click on iOS Extension `References` > `Add Reference` > `Projects` > `FormsShareExtension` and press **OK**.
+    - Right click on iOS Extension, select **References > Add Reference > Projects > FormsShareExtension** and press **OK**.
 
-    - Right click on iOS Extension `Packages` > `Manage NuGet Packages...` > `Xamarin.Forms`  and press **Add Package**.
+    - Right click on iOS Extension, select **Packages > Manage NuGet Packages... > Xamarin.Forms**  and press **Add Package**.
 
-1. Expand the extension project and modify an entry point to initialize Xamarin.Forms and create pages. Per iOS requirements, an Extension must define the entry point in **Info.plist** as `NSExtensionMainStoryboard` or `NSExtensionPrincipalClass`. And once the entry point is activated, in our case it is the `ActionViewController.ViewDidLoad` method, we can create instance of a Xamarin.Forms page and show it to an user. Open the entry point and replace the `ViewDidLoad` method with the following implementation:
+1. Expand the Extension project and modify an entry point to initialize Xamarin.Forms and create pages. Per iOS requirements, an Extension must define the entry point in **Info.plist** as `NSExtensionMainStoryboard` or `NSExtensionPrincipalClass`. And once the entry point is activated, in our case it is the `ActionViewController.ViewDidLoad` method, we can create an instance of a Xamarin.Forms page and show it to an user. Open the entry point and replace the `ViewDidLoad` method with the following implementation:
 
     ```csharp
             public override void ViewDidLoad()
@@ -140,8 +139,8 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
                 // Create an instance of XF page with associated View Model
                 var xfPage = new MainPage();
                 var viewModel = (MainPageViewModel)xfPage.BindingContext;
-                viewModel.Message = "Welcome to XF Page created from an iOS extension";
-                // Override the behavior to complete the execution of the extension when a user press the button
+                viewModel.Message = "Welcome to XF Page created from an iOS Extension";
+                // Override the behavior to complete the execution of the Extension when a user press the button
                 viewModel.DoCommand = new Command(() => DoneClicked(this));
                 // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
                 var newController = xfPage.CreateViewController();
@@ -150,27 +149,32 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
             }
     ```
 
-    Build and run the application.
+    The `MainPage` is instantiated using a standard constructor and before you can use it in the Extension, convert it to a native `UIViewController` by using the `CreateViewController` extension method. Build and run the application:
 
     ![Create Extension](/ReadmeItems/3.walkthrough-runapp.png)
 
-    Activate the Extension, navigate to Safari browser, type in any web address, e.g. [microsoft.com](https://microsoft.com) press navigate and then press the **Share** icon at the bottom of the page to see available action extensions. From the list of available extensions select the MyAction Extension by tapping on it:
+    To activate the Extension, navigate to Safari browser, type in any web address, e.g. [microsoft.com](https://microsoft.com), press navigate and then press the **Share** icon at the bottom of the page to see available action extensions. From the list of available extensions select the **MyAction** Extension by tapping on it:
 
     ![Create Extension](/ReadmeItems/4.walkthrough-run1.png) ![Create Extension](/ReadmeItems/5.walkthrough-run2.png) ![Create Extension](/ReadmeItems/6.walkthrough-run3.png)
 
-1. The original entry point view controller is visible because it is created and activated by iOS. In order to fix that, change the modal presentation style to **FullScreen** for the new controller by adding the following like right before the `PresentModalViewController` call:
+    The Extension is activated and Xamarin.Forms page is displayed to an user. All the bindings and commands work as in the Container app.
+
+1. The original entry point view controller is visible because it is created and activated by iOS. In order to fix that, change the modal presentation style to `UIModalPresentationStyle.FullScreen` for the new controller by adding the following line right before the `PresentModalViewController` call:
 
     ```csharp
         newController.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
     ```
 
-    Build and run in iOS Simulator. For the device build make sure you use proper build settings and the **Release** configuration as [described here](https://docs.microsoft.com/xamarin/ios/platform/extensions#debug-and-release-versions-of-extensions). The demo:
+    Build and run in iOS simulator or a device. The demo:
 
     ![Demo - Xamarin.Forms in iOS Extension](/ReadmeItems/8.walkthrough-result-demo.gif)
 
+    > [!IMPORTANT]
+    > For the device build make sure to use proper build settings and the **Release** configuration as [described here](https://docs.microsoft.com/xamarin/ios/platform/extensions#debug-and-release-versions-of-extensions).
+
 ## Useful links
 
-- [iOS extensions in Xamarin.iOS](https://docs.microsoft.com/xamarin/ios/platform/extensions)
+- [iOS Extensions in Xamarin.iOS](https://docs.microsoft.com/xamarin/ios/platform/extensions)
 - [Xamarin.Forms in Xamarin Native Projects](https://docs.microsoft.com/xamarin/xamarin-forms/platform/native-forms)
 - [Optimize Efficiency and Performance of an iOS App Extension](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html#//apple_ref/doc/uid/TP40014214-CH5-SW7)
 - [Sample source code](https://github.com/xamcat/xamarin-forms-ios-extension)
