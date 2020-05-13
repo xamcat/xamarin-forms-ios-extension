@@ -23,7 +23,19 @@ namespace FormsShareExtension
             }
         }
 
-        public ICommand DoCommand { get; }
+        private ICommand _doCommand;
+        public ICommand DoCommand
+        {
+            get { return _doCommand; }
+            set
+            {
+                if(_doCommand != value)
+                {
+                    _doCommand = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoCommand)));
+                }
+            }
+        }
 
         public MainPageViewModel()
         {
