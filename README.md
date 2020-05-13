@@ -28,7 +28,7 @@ There are many [known limitations](https://docs.microsoft.com/xamarin/ios/platfo
 
 ## Walkthrough
 
-In this walkthrough we are going to create a Xamarin.Forms application, a Xamarin.iOS Extension and reuse shared code within the Extension project.
+In this walkthrough we are going to create a Xamarin.Forms application, a Xamarin.iOS Extension and reuse shared code within the Extension project:
 
 1. Open Visual Studio and create a new Xamarin.Forms project using the `Blank Forms App` template, name it `FormsShareExtension`:
 
@@ -36,87 +36,87 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 
 1. Open `FormsShareExtension/MainPage.xaml`, replace the content with the following layout:
 
-```xaml
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="FormsShareExtension.MainPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-    xmlns:local="clr-namespace:FormsShareExtension"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    x:DataType="local:MainPageViewModel"
-    BackgroundColor="Orange"
-    mc:Ignorable="d">
-    <ContentPage.BindingContext>
-        <local:MainPageViewModel Message="Hello from Xamarin.Forms!" />
-    </ContentPage.BindingContext>
-    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-        <Label
-            Margin="20"
-            Text="{Binding Message}"
-            VerticalOptions="CenterAndExpand" />
-        <Button Command="{Binding DoCommand}" Text="Do the job!" />
-    </StackLayout>
-</ContentPage>
-```
+    ```xaml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <ContentPage
+        x:Class="FormsShareExtension.MainPage"
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+        xmlns:local="clr-namespace:FormsShareExtension"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:DataType="local:MainPageViewModel"
+        BackgroundColor="Orange"
+        mc:Ignorable="d">
+        <ContentPage.BindingContext>
+            <local:MainPageViewModel Message="Hello from Xamarin.Forms!" />
+        </ContentPage.BindingContext>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Label
+                Margin="20"
+                Text="{Binding Message}"
+                VerticalOptions="CenterAndExpand" />
+            <Button Command="{Binding DoCommand}" Text="Do the job!" />
+        </StackLayout>
+    </ContentPage>
+    ```
 
 1. Right click on the `FormsShareExtension` project, add `Add` > `New Class` > `Empty Class`, name it `MainPageViewModel` and press `Create`. Replace the content of the class with the following code:
 
-```csharp
-using System;
-using System.ComponentModel;
-using System.Windows.Input;
-using Xamarin.Forms;
+    ```csharp
+    using System;
+    using System.ComponentModel;
+    using System.Windows.Input;
+    using Xamarin.Forms;
 
-namespace FormsShareExtension
-{
-    public class MainPageViewModel : INotifyPropertyChanged
+    namespace FormsShareExtension
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private string _message;
-        public string Message
+        public class MainPageViewModel : INotifyPropertyChanged
         {
-            get { return _message; }
-            set
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            private string _message;
+            public string Message
             {
-                if (_message != value)
+                get { return _message; }
+                set
                 {
-                    _message = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
+                    if (_message != value)
+                    {
+                        _message = value;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Message)));
+                    }
                 }
             }
-        }
 
-        private ICommand _doCommand;
-        public ICommand DoCommand
-        {
-            get { return _doCommand; }
-            set
+            private ICommand _doCommand;
+            public ICommand DoCommand
             {
-                if(_doCommand != value)
+                get { return _doCommand; }
+                set
                 {
-                    _doCommand = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoCommand)));
+                    if(_doCommand != value)
+                    {
+                        _doCommand = value;
+                        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoCommand)));
+                    }
                 }
             }
-        }
 
-        public MainPageViewModel()
-        {
-            DoCommand = new Command(OnDoCommandExecuted);
-        }
+            public MainPageViewModel()
+            {
+                DoCommand = new Command(OnDoCommandExecuted);
+            }
 
-        private void OnDoCommandExecuted(object state)
-        {
-            Message = $"Job {Environment.TickCount} has been completed!";
+            private void OnDoCommandExecuted(object state)
+            {
+                Message = $"Job {Environment.TickCount} has been completed!";
+            }
         }
     }
-}
-```
+    ```
 
-The code is shared across all platforms and will be used by an iOS Extension as well.
+    The code is shared across all platforms and will be used by an iOS Extension as well.
 
 1. Right click on the solution, select `Add` > `New Project` > `iOS` > `Extension` > `Action Extension`, name it `MyAction` and press **Create**:
 
@@ -130,47 +130,47 @@ The code is shared across all platforms and will be used by an iOS Extension as 
 
 1. Expand the extension project and modify an entry point to initialize Xamarin.Forms and create pages. Per iOS requirements, an Extension must define the entry point in **Info.plist** as `NSExtensionMainStoryboard` or `NSExtensionPrincipalClass`. And once the entry point is activated, in our case it is the `ActionViewController.ViewDidLoad` method, we can create instance of a Xamarin.Forms page and show it to an user. Open the entry point and replace the `ViewDidLoad` method with the following implementation:
 
-```csharp
-        public override void ViewDidLoad()
-        {
-            base.ViewDidLoad();
+    ```csharp
+            public override void ViewDidLoad()
+            {
+                base.ViewDidLoad();
 
-            // Initialize Xamarin.Forms framework
-            global::Xamarin.Forms.Forms.Init();
-            // Create an instance of XF page with associated View Model
-            var xfPage = new MainPage();
-            var viewModel = (MainPageViewModel)xfPage.BindingContext;
-            viewModel.Message = "Welcome to XF Page created from an iOS extension";
-            // Override the behavior to complete the execution of the extension when a user press the button
-            viewModel.DoCommand = new Command(() => DoneClicked(this));
-            // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
-            var newController = xfPage.CreateViewController();
-            // Present new view controller as a regular view controller
-            this.PresentModalViewController(newController, false);
-        }
-```
+                // Initialize Xamarin.Forms framework
+                global::Xamarin.Forms.Forms.Init();
+                // Create an instance of XF page with associated View Model
+                var xfPage = new MainPage();
+                var viewModel = (MainPageViewModel)xfPage.BindingContext;
+                viewModel.Message = "Welcome to XF Page created from an iOS extension";
+                // Override the behavior to complete the execution of the extension when a user press the button
+                viewModel.DoCommand = new Command(() => DoneClicked(this));
+                // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
+                var newController = xfPage.CreateViewController();
+                // Present new view controller as a regular view controller
+                this.PresentModalViewController(newController, false);
+            }
+    ```
 
-Build and run the application.
+    Build and run the application.
 
-![Create Extension](/ReadmeItems/3.walkthrough-runapp.png)
+    ![Create Extension](/ReadmeItems/3.walkthrough-runapp.png)
 
-Activate the Extension, navigate to Safari browser, type in any web address, e.g. [microsoft.com](https://microsoft.com) press navigate and then press the **Share** icon at the bottom of the page to see available action extensions. From the list of available extensions select the MyAction Extension by tapping on it:
+    Activate the Extension, navigate to Safari browser, type in any web address, e.g. [microsoft.com](https://microsoft.com) press navigate and then press the **Share** icon at the bottom of the page to see available action extensions. From the list of available extensions select the MyAction Extension by tapping on it:
 
-![Create Extension](/ReadmeItems/4.walkthrough-run1.png)
+    ![Create Extension](/ReadmeItems/4.walkthrough-run1.png)  
 
-![Create Extension](/ReadmeItems/5.walkthrough-run2.png)
+    ![Create Extension](/ReadmeItems/5.walkthrough-run2.png)
 
-![Create Extension](/ReadmeItems/6.walkthrough-run3.png)
+    ![Create Extension](/ReadmeItems/6.walkthrough-run3.png)
 
-1. The original entry point view controller is visible because and in order to fix that, change the modal presentation style for the new controller by adding the following like right before the `PresentModalViewController` call:
+1. The original entry point view controller is visible because it is created and activated by iOS. In order to fix that, change the modal presentation style to **FullScreen** for the new controller by adding the following like right before the `PresentModalViewController` call:
 
-```csharp
-    newController.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
-```
+    ```csharp
+        newController.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+    ```
 
-Build and run in iOS Simulator. For the device build make sure you use proper build settings and the **Release** configuration as [described here](https://docs.microsoft.com/xamarin/ios/platform/extensions#debug-and-release-versions-of-extensions). The demo:
+    Build and run in iOS Simulator. For the device build make sure you use proper build settings and the **Release** configuration as [described here](https://docs.microsoft.com/xamarin/ios/platform/extensions#debug-and-release-versions-of-extensions). The demo:
 
-![Demo - Xamarin.Forms in iOS Extension](/ReadmeItems/8.walkthrough-result-demo.gif)
+    ![Demo - Xamarin.Forms in iOS Extension](/ReadmeItems/8.walkthrough-result-demo.gif)
 
 ## Useful links
 
