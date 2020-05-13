@@ -1,7 +1,5 @@
 # Reuse your Xamarin.Forms pages in an iOS extension
 
-## Background
-
 iOS extensions allow to customize existing system behavior by adding extra functionality to [predefined by iOS and macOS Extension Points](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/index.html#//apple_ref/doc/uid/TP40014214-CH20-SW2), such as custom context actions, password autofill, incoming calls filters, notification content modifiers, and other. Xamarin.iOS supports extensions and [this guide](https://docs.microsoft.com/xamarin/ios/platform/extensions) will walk you through creating an iOS extension using Xamarin tools.
 
 Extensions are distributed as part of a Container app and activated from a specific Extension Point in a Host app. The Container app is usually a simple iOS application, which provides an user with information about the Extension, how to activate and use it. There are three main ways to share code between an Extension and a Container app:
