@@ -156,11 +156,7 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 
     Activate the Extension, navigate to Safari browser, type in any web address, e.g. [microsoft.com](https://microsoft.com) press navigate and then press the **Share** icon at the bottom of the page to see available action extensions. From the list of available extensions select the MyAction Extension by tapping on it:
 
-    ![Create Extension](/ReadmeItems/4.walkthrough-run1.png)  
-
-    ![Create Extension](/ReadmeItems/5.walkthrough-run2.png)
-
-    ![Create Extension](/ReadmeItems/6.walkthrough-run3.png)
+    ![Create Extension](/ReadmeItems/4.walkthrough-run1.png) ![Create Extension](/ReadmeItems/5.walkthrough-run2.png) ![Create Extension](/ReadmeItems/6.walkthrough-run3.png)
 
 1. The original entry point view controller is visible because it is created and activated by iOS. In order to fix that, change the modal presentation style to **FullScreen** for the new controller by adding the following like right before the `PresentModalViewController` call:
 
@@ -177,4 +173,4 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 - [iOS extensions in Xamarin.iOS](https://docs.microsoft.com/xamarin/ios/platform/extensions)
 - [Xamarin.Forms in Xamarin Native Projects](https://docs.microsoft.com/xamarin/xamarin-forms/platform/native-forms)
 - [Optimize Efficiency and Performance of an iOS App Extension](https://developer.apple.com/library/archive/documentation/General/Conceptual/ExtensibilityPG/ExtensionCreation.html#//apple_ref/doc/uid/TP40014214-CH5-SW7)
-- [Sample source code](https://github.com/alexeystrakh/xamarin-forms-ios-extension)
+- [Sample source code](https://github.com/xamcat/xamarin-forms-ios-extension)
