@@ -128,23 +128,23 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 1. Expand the Extension project and modify an entry point to initialize Xamarin.Forms and create pages. Per iOS requirements, an Extension must define the entry point in **Info.plist** as `NSExtensionMainStoryboard` or `NSExtensionPrincipalClass`. And once the entry point is activated, in our case it is the `ActionViewController.ViewDidLoad` method, we can create an instance of a Xamarin.Forms page and show it to an user. Open the entry point and replace the `ViewDidLoad` method with the following implementation:
 
     ```csharp
-            public override void ViewDidLoad()
-            {
-                base.ViewDidLoad();
+    public override void ViewDidLoad()
+    {
+        base.ViewDidLoad();
 
-                // Initialize Xamarin.Forms framework
-                global::Xamarin.Forms.Forms.Init();
-                // Create an instance of XF page with associated View Model
-                var xfPage = new MainPage();
-                var viewModel = (MainPageViewModel)xfPage.BindingContext;
-                viewModel.Message = "Welcome to XF Page created from an iOS Extension";
-                // Override the behavior to complete the execution of the Extension when a user press the button
-                viewModel.DoCommand = new Command(() => DoneClicked(this));
-                // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
-                var newController = xfPage.CreateViewController();
-                // Present new view controller as a regular view controller
-                this.PresentModalViewController(newController, false);
-            }
+        // Initialize Xamarin.Forms framework
+        global::Xamarin.Forms.Forms.Init();
+        // Create an instance of XF page with associated View Model
+        var xfPage = new MainPage();
+        var viewModel = (MainPageViewModel)xfPage.BindingContext;
+        viewModel.Message = "Welcome to XF Page created from an iOS Extension";
+        // Override the behavior to complete the execution of the Extension when a user press the button
+        viewModel.DoCommand = new Command(() => DoneClicked(this));
+        // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
+        var newController = xfPage.CreateViewController();
+        // Present new view controller as a regular view controller
+        this.PresentModalViewController(newController, false);
+    }
     ```
 
     The `MainPage` is instantiated using a standard constructor and before you can use it in the Extension, convert it to a native `UIViewController` by using the `CreateViewController` extension method. Build and run the application:
@@ -160,7 +160,7 @@ In this walkthrough we are going to create a Xamarin.Forms application, a Xamari
 1. The original entry point view controller is visible because it is created and activated by iOS. In order to fix that, change the modal presentation style to `UIModalPresentationStyle.FullScreen` for the new controller by adding the following line right before the `PresentModalViewController` call:
 
     ```csharp
-        newController.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
+    newController.ModalPresentationStyle = UIModalPresentationStyle.FullScreen;
     ```
 
     Build and run in iOS simulator or a device. The demo:
