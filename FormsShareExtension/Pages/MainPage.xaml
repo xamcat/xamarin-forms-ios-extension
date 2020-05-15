@@ -15,6 +15,7 @@
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <Label
             Margin="20"
+            HorizontalTextAlignment="Center"
             Text="{Binding Message}"
             VerticalOptions="CenterAndExpand" />
         <Button Command="{Binding DoCommand}" Text="Do the job!" />

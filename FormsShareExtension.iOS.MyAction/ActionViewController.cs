@@ -27,6 +27,8 @@ namespace MyAction
             viewModel.Message = "Welcome to XF Page created from an iOS Extension";
             // Override the behavior to complete the execution of the Extension when a user press the button
             viewModel.DoneCommand = new Command(() => DoneClicked(this));
+            // Apply resources from a ResourceDictionary
+            xfPage.Resources.Add(new App().Resources);
             // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
             var newController = xfPage.CreateViewController();
             // Make sure the presentation style is set to full screen to avoid rendering the original entry point
