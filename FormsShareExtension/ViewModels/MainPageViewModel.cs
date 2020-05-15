@@ -23,6 +23,8 @@ namespace FormsShareExtension
             }
         }
 
+        public bool IsDoneAvailable => DoneCommand != null;
+
         private ICommand _doCommand;
         public ICommand DoCommand
         {
@@ -37,6 +39,21 @@ namespace FormsShareExtension
             }
         }
 
+        private ICommand _doneCommand;
+        public ICommand DoneCommand
+        {
+            get { return _doneCommand; }
+            set
+            {
+                if (_doneCommand != value)
+                {
+                    _doneCommand = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DoneCommand)));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsDoneAvailable)));
+                }
+            }
+        }
+
         public MainPageViewModel()
         {
             DoCommand = new Command(OnDoCommandExecuted);
@@ -45,6 +62,7 @@ namespace FormsShareExtension
         private void OnDoCommandExecuted(object state)
         {
             Message = $"Job {Environment.TickCount} has been completed!";
+            DependencyService.Get<IDialogService>().ShowDialogAsync("Success", Message);
         }
     }
 }

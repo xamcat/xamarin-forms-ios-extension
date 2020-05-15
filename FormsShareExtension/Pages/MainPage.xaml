@@ -18,5 +18,9 @@
             Text="{Binding Message}"
             VerticalOptions="CenterAndExpand" />
         <Button Command="{Binding DoCommand}" Text="Do the job!" />
+        <Button
+            Command="{Binding DoneCommand}"
+            IsVisible="{Binding IsDoneAvailable}"
+            Text="Done" />
     </StackLayout>
 </ContentPage>

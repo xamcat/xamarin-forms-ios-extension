@@ -25,7 +25,7 @@
     <MtouchFastDev>true</MtouchFastDev>
     <MtouchProfiling>true</MtouchProfiling>
     <IOSDebuggerPort>26634</IOSDebuggerPort>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
@@ -124,6 +124,10 @@
     <ProjectReference Include="..\FormsShareExtension\FormsShareExtension.csproj">
       <Project>{476B6744-B597-46F8-BEE2-7283390CED81}</Project>
       <Name>FormsShareExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FormsShareExtension.iOS.Core\FormsShareExtension.iOS.Core.csproj">
+      <Project>{01F1F897-5E25-4925-BE77-F7576E6E3B38}</Project>
+      <Name>FormsShareExtension.iOS.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.AppExtension.CSharp.targets" />

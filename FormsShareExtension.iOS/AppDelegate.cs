@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FormsShareExtension.iOS.Core.Services;
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
 namespace FormsShareExtension.iOS
 {
@@ -23,8 +24,8 @@ namespace FormsShareExtension.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            DependencyService.Register<IDialogService, DialogService>();
             LoadApplication(new App());
-
             return base.FinishedLaunching(app, options);
         }
     }
