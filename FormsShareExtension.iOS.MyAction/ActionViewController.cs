@@ -4,6 +4,7 @@ using UIKit;
 using FormsShareExtension;
 using Xamarin.Forms;
 using FormsShareExtension.iOS.Core.Services;
+using FormsShareExtension.Resources;
 
 namespace MyAction
 {
@@ -27,8 +28,9 @@ namespace MyAction
             viewModel.Message = "Welcome to XF Page created from an iOS Extension";
             // Override the behavior to complete the execution of the Extension when a user press the button
             viewModel.DoneCommand = new Command(() => DoneClicked(this));
-            // Apply resources from a ResourceDictionary
-            xfPage.Resources.Add(new App().Resources);
+            // Load and apply resources from a ResourceDictionary
+            var resources = ResourcesHelper.LoadAppResources();
+            resources.Apply(xfPage);
             // Convert XF page to a native UIViewController which can be consumed by the iOS Extension
             var newController = xfPage.CreateViewController();
             // Make sure the presentation style is set to full screen to avoid rendering the original entry point

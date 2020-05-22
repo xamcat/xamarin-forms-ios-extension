@@ -18,5 +18,6 @@
     <Folder Include="Services\" />
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 </Project>

@@ -6,10 +6,5 @@
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Application.Resources>
-        <Style ApplyToDerivedTypes="True" TargetType="Label">
-            <Setter Property="TextColor" Value="Purple" />
-            <Setter Property="FontSize" Value="30" />
-        </Style>
-    </Application.Resources>
+    <Application.Resources />
 </Application>
