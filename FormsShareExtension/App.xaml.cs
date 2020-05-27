@@ -1,7 +1,5 @@
-﻿using System;
-using FormsShareExtension.Resources;
+﻿using FormsShareExtension.Resources;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FormsShareExtension
 {
@@ -10,7 +8,8 @@ namespace FormsShareExtension
         public App()
         {
             InitializeComponent();
-            App.Current.Resources.LoadAppResources();
+            var resources = ResourcesHelper.LoadAppResources();
+            resources.Apply(App.Current.Resources);
             MainPage = new MainPage();
         }
 
