@@ -7,8 +7,8 @@ namespace FormsShareExtension.Resources
     {
         public static ResourceDictionary LoadAppResources()
         {
-            var resources = new ResourceDictionary();
-            return resources.LoadAppResources();
+            var app = new App();
+            return app.Resources.LoadAppResources();
         }
 
         public static ResourceDictionary LoadAppResources(this ResourceDictionary source)

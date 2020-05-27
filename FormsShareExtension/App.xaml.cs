@@ -8,8 +8,7 @@ namespace FormsShareExtension
         public App()
         {
             InitializeComponent();
-            var resources = ResourcesHelper.LoadAppResources();
-            resources.Apply(App.Current.Resources);
+            Application.Current.Resources.LoadAppResources();
             MainPage = new MainPage();
         }
 
