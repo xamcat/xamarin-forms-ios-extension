@@ -1,7 +1,5 @@
-﻿using System;
-using FormsShareExtension.Resources;
+﻿using FormsShareExtension.Resources;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FormsShareExtension
 {

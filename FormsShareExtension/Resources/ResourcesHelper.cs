@@ -7,25 +7,33 @@ namespace FormsShareExtension.Resources
     {
         public static ResourceDictionary LoadAppResources()
         {
-            var resources = new ResourceDictionary();
-            return resources.LoadAppResources();
+            var app = new App();
+            return app.Resources.LoadAppResources();
         }
 
-        public static ResourceDictionary LoadAppResources(this ResourceDictionary resourceDictionary)
+        public static ResourceDictionary LoadAppResources(this ResourceDictionary source)
         {
-            resourceDictionary.MergedDictionaries.Clear();
-            resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Colors1());
-            resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict1());
-            resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict2());
+            source.MergedDictionaries.Clear();
+            source.MergedDictionaries.Add(new FormsShareExtension.Resources.Colors1());
+            source.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict1());
+            source.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict2());
 
-            return resourceDictionary;
+            return source;
         }
 
-        public static void Apply(this ResourceDictionary resourceDictionary, ContentPage content)
+        public static void Apply(this ResourceDictionary source, ResourceDictionary target)
         {
-            foreach (var resourceDict in resourceDictionary.MergedDictionaries)
+            foreach (var resourceDict in source.MergedDictionaries)
             {
-                content.Resources.Add(resourceDict);
+                target.Add(resourceDict);
+            }
+        }
+
+        public static void Apply(this ResourceDictionary source, ContentPage target)
+        {
+            foreach (var resourceDict in source.MergedDictionaries)
+            {
+                target.Resources.Add(resourceDict);
             }
         }
     }
