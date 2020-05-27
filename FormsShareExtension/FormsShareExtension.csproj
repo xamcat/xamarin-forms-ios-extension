@@ -18,6 +18,10 @@
     <Folder Include="Services\" />
     <Folder Include="Pages\" />
     <Folder Include="ViewModels\" />
-    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\Colors1.xaml.cs">
+      <DependentUpon>Colors1.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

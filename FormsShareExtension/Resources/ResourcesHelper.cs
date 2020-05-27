@@ -14,6 +14,7 @@ namespace FormsShareExtension.Resources
         public static ResourceDictionary LoadAppResources(this ResourceDictionary resourceDictionary)
         {
             resourceDictionary.MergedDictionaries.Clear();
+            resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Colors1());
             resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict1());
             resourceDictionary.MergedDictionaries.Add(new FormsShareExtension.Resources.Dict2());
 
